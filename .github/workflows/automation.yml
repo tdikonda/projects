@@ -1,0 +1,44 @@
+# Basic workflow Github Actions Automation
+name: Automation
+
+# Controls when the workflow will run
+on:
+  schedule:
+    # run this script in the morning between 8 - 9 AM ET (13:00 - 14:00 UTC) Monday through Friday. Based on US Daylight Saving Time
+    - cron: '0 14 * * 1-5'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run consists of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "run-script"
+  run-script:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Sets up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      # Install Dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas natsort
+
+      # Run Stock Tracker script
+      - name: Run stock tracker
+        env:
+          STOCK_TRACKER_EMAIL: ${{ secrets.STOCK_TRACKER_SENDER_EMAIL }}
+          STOCK_TRACKER_PASSWORD: ${{ secrets.STOCK_TRACKER_SENDER_PASSWORD }}
+          STOCK_TRACKER_RECIPIENT: ${{ secrets.STOCK_TRACKER_RECIPIENT_EMAIL }}
+          STOCK_SYMBOLS: ${{ vars.STOCK_TRACKER_SYMBOLS }}
+        run: python stock_tracker.py
