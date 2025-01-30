@@ -41,4 +41,4 @@ jobs:
           STOCK_TRACKER_PASSWORD: ${{ secrets.STOCK_TRACKER_SENDER_PASSWORD }}
           STOCK_TRACKER_RECIPIENT: ${{ secrets.STOCK_TRACKER_RECIPIENT_EMAIL }}
           STOCK_SYMBOLS: ${{ vars.STOCK_TRACKER_SYMBOLS }}
-        run: python stock_tracker.py
+        run: python stock_tracker/stock_tracker.py
