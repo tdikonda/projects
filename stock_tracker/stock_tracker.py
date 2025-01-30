@@ -75,6 +75,19 @@ class StockTracker:
                 print(f"Error processing {stock_symbol}: {e}")
 
         df = pd.DataFrame(report_data)
+
+        # Add debug logging
+        print("DataFrame shape:", df.shape)
+        print("DataFrame columns:", df.columns)
+
+        if df.empty:
+            print("DataFrame is empty - check input data")
+            return
+
+        if '% Current Price away from ATH' not in df.columns:
+            print("Required column not found. Available columns:", df.columns)
+            return
+
         # sort values in descending order for '% Current Price away from ATH' column
         df_sorted = df.sort_values(by='% Current Price away from ATH', ascending=False, key=natsort_keygen())
 
