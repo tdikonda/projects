@@ -175,6 +175,10 @@ class StockTracker:
 
             # Create and send report
             df = self.create_stock_report(stocks_symbol)
+            if df is None or df.empty:
+                print("No valid data to generate report")
+                return
+
             print(f"Generated report for {len(stocks_symbol)} stocks")
 
             # Send email
@@ -201,9 +205,22 @@ def main():
 
     # Get stocks from environment variable
     stocks_str = os.environ.get('STOCK_SYMBOLS')
+    # Add debug logging
+    stocks_str = os.environ.get('STOCK_SYMBOLS')
+    print(f"Raw STOCK_SYMBOLS environment variable: '{stocks_str}'")
+
+    if not stocks_str:
+        raise ValueError("STOCK_SYMBOLS environment variable is not set or empty")
+
     # Split the comma-separated string into a list
     stocks_symbol = [symbol.strip() for symbol in stocks_str.split(',')]
-    tracker.create_stock_report(stocks_symbol)
+    print(f"Processed stock symbols: {stocks_symbol}")
+
+    df = tracker.create_stock_report(stocks_symbol)
+
+    if df is None:
+        print("No valid stock data generated, stopping report")
+        return
 
     # Run the report
     tracker.run_report(stocks_symbol)
