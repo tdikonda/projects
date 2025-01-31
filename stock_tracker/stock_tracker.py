@@ -179,9 +179,9 @@ def main():
     Configures email settings and adds stocks to track.
     """
     email_config = {
-        'sender_email': os.environ.get('STOCK_TRACKER_SENDER_EMAIL'),
-        'sender_password': os.environ.get('STOCK_TRACKER_SENDER_PASSWORD'),
-        'recipient_email': os.environ.get('STOCK_TRACKER_RECIPIENT_EMAIL'),
+        'sender_email': os.getenv('STOCK_TRACKER_EMAIL'),
+        'sender_password': os.getenv('STOCK_TRACKER_PASSWORD'),
+        'recipient_email': os.getenv('STOCK_TRACKER_RECIPIENT'),
         'smtp_server': 'smtp.mail.yahoo.com',
         'smtp_port': 587
     }
@@ -189,7 +189,7 @@ def main():
     tracker = StockTracker(email_config)
 
     # Get stocks from environment variable
-    stocks_str = os.environ.get('STOCK_TRACKER_SYMBOLS')
+    stocks_str = os.getenv('STOCK_SYMBOLS')
     print(f'stocks_str is {stocks_str}')
 
     # Split the comma-separated string into a list
