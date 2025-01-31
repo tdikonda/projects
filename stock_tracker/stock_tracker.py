@@ -190,9 +190,11 @@ def main():
 
     # Get stocks from environment variable
     stocks_str = os.environ.get('STOCK_TRACKER_SYMBOLS')
+    print(f'stocks_str is {stocks_str}')
 
     # Split the comma-separated string into a list
     stocks_symbol = [symbol.strip() for symbol in stocks_str.split(',')]
+    print(f'stocks_symbol is {stocks_symbol}')
 
     # Create stock report
     tracker.create_stock_report(stocks_symbol)
