@@ -195,7 +195,9 @@ def main():
     tracker = StockTracker(email_config)
 
     # Get stocks from environment variable
-    stocks_symbol = os.getenv('STOCK_SYMBOLS')
+    stocks_str = os.environ.get('STOCK_SYMBOLS')
+    # Split the comma-separated string into a list
+    stocks_symbol = [symbol.strip() for symbol in stocks_str.split(',')]
 
     # Create stock report
     tracker.create_stock_report(stocks_symbol)
