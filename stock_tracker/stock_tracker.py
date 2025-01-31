@@ -2,6 +2,7 @@
 Stock tracker python script
 Generates a table with columns as below
 "Company Name | Stock Type | Stock Symbol | Current Price | 52 Week Low | 52 Week High | All Time High (ATH) | ATH Date | % Current Price away from ATH"
+
 The row values are sorted in descending order based on "% Current Price away from ATH" column value,
 which means larger difference between ATH & current price of a stock would make it to the top of the table
 '''
@@ -75,18 +76,6 @@ class StockTracker:
                 print(f"Error processing {stock_symbol}: {e}")
 
         df = pd.DataFrame(report_data)
-
-        # Add debug logging
-        print("DataFrame shape:", df.shape)
-        print("DataFrame columns:", df.columns)
-
-        if df.empty:
-            print("DataFrame is empty - check input data")
-            return
-
-        if '% Current Price away from ATH' not in df.columns:
-            print("Required column not found. Available columns:", df.columns)
-            return
 
         # sort values in descending order for '% Current Price away from ATH' column
         df_sorted = df.sort_values(by='% Current Price away from ATH', ascending=False, key=natsort_keygen())
@@ -173,12 +162,8 @@ class StockTracker:
         try:
             print("Starting report generation")
 
-            # Create and send report
+            # Create report
             df = self.create_stock_report(stocks_symbol)
-            if df is None or df.empty:
-                print("No valid data to generate report")
-                return
-
             print(f"Generated report for {len(stocks_symbol)} stocks")
 
             # Send email
@@ -194,9 +179,9 @@ def main():
     Configures email settings and adds stocks to track.
     """
     email_config = {
-        'sender_email': os.environ.get('STOCK_TRACKER_EMAIL'),
-        'sender_password': os.environ.get('STOCK_TRACKER_PASSWORD'),
-        'recipient_email': os.environ.get('STOCK_TRACKER_RECIPIENT'),
+        'sender_email': os.environ.get('STOCK_TRACKER_SENDER_EMAIL'),
+        'sender_password': os.environ.get('STOCK_TRACKER_SENDER_PASSWORD'),
+        'recipient_email': os.environ.get('STOCK_TRACKER_RECIPIENT_EMAIL'),
         'smtp_server': 'smtp.mail.yahoo.com',
         'smtp_port': 587
     }
@@ -204,23 +189,13 @@ def main():
     tracker = StockTracker(email_config)
 
     # Get stocks from environment variable
-    stocks_str = os.environ.get('STOCK_SYMBOLS')
-    # Add debug logging
-    stocks_str = os.environ.get('STOCK_SYMBOLS')
-    print(f"Raw STOCK_SYMBOLS environment variable: '{stocks_str}'")
-
-    if not stocks_str:
-        raise ValueError("STOCK_SYMBOLS environment variable is not set or empty")
+    stocks_str = os.environ.get('STOCK_TRACKER_SYMBOLS')
 
     # Split the comma-separated string into a list
     stocks_symbol = [symbol.strip() for symbol in stocks_str.split(',')]
-    print(f"Processed stock symbols: {stocks_symbol}")
 
-    df = tracker.create_stock_report(stocks_symbol)
-
-    if df is None:
-        print("No valid stock data generated, stopping report")
-        return
+    # Create stock report
+    tracker.create_stock_report(stocks_symbol)
 
     # Run the report
     tracker.run_report(stocks_symbol)
