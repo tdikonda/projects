@@ -1,0 +1,51 @@
+# Apply to all files without committing:
+#   pre-commit run --all-files
+# Update this file:
+#   pre-commit autoupdate
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0 # https://github.com/pre-commit/pre-commit-hooks/tags
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-ast
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-yaml
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
+      - id: mixed-line-ending
+      - id: pretty-format-json
+        args: ["--autofix", "--no-sort-keys"]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
+  # - repo: https://github.com/google/yapf
+  #   rev: v0.43.0 # https://github.com/google/yapf/tags
+  #   hooks:
+  #     - id: yapf
+  #       name: code formatting using yapf
+  #       args: ["--style=.style.yapf", "--parallel", "--in-place"]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.0 # https://github.com/PyCQA/isort/tags
+    hooks:
+      - id: isort
+        name: sort imports alphabetically and automatically separated into sections and by type
+
+  - repo: https://github.com/crate-ci/typos
+    rev: typos-dict-v0.12.4 # https://github.com/crate-ci/typos/tags
+    hooks:
+      - id: typos
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.23.3 # https://github.com/gitleaks/gitleaks/tags
+    hooks:
+      - id: gitleaks
+
+ci:
+  autoupdate_schedule: weekly

@@ -1,0 +1,27 @@
+# Vim files
+*.swp
+*.swo
+
+# Byte-compiled / optimized / DLL files for Python
+__pycache__/
+*.py[cod]
+
+# Env variables
+.env*
+
+# Log files
+*.log
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Saved model files
+*.h5
+*.hdf5
+*.tflite
+
+# Trained model weights
+*.pth
+
+# Saved Numpy Array Format
+*.npy
