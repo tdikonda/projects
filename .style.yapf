@@ -4,7 +4,7 @@ based_on_style = yapf
 # The column limit.
 column_limit = 80
 # The number of columns to use for indentation.
-indent_width=4
+indent_width = 4
 # The number of spaces required before a trailing comment.
 spaces_before_comment = 2
 # Set to True to prefer splitting before 'and' or 'or' rather than after.
