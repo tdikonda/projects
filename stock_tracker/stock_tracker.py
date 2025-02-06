@@ -58,9 +58,10 @@ class StockTracker:
                 all_time_high_date = historical_data[historical_data['High'] == all_time_high].index[0]
 
                 if stock.info['quoteType'] == 'MUTUALFUND':
-                    current_price = stock.history(period="2d")['Close'].iloc[-1]
+                    current_price = stock.info["previousClose"]
                 else:
-                    current_price = stock.history(period="1d")['Close'].iloc[-1]
+                    current_price = stock.info["currentPrice"]
+
 
                 # Calculate percentage difference
                 percentage_diff = ((all_time_high - current_price) / all_time_high) * 100
