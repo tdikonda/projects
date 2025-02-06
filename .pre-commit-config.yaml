@@ -24,12 +24,12 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
 
-  # - repo: https://github.com/google/yapf
-  #   rev: v0.43.0 # https://github.com/google/yapf/tags
-  #   hooks:
-  #     - id: yapf
-  #       name: code formatting using yapf
-  #       args: ["--style=.style.yapf", "--parallel", "--in-place"]
+  - repo: https://github.com/google/yapf
+    rev: v0.43.0 # https://github.com/google/yapf/tags
+    hooks:
+      - id: yapf
+        name: code formatting using yapf
+        args: ["--style=.style.yapf", "--parallel", "--in-place"]
 
   - repo: https://github.com/pycqa/isort
     rev: 6.0.0 # https://github.com/PyCQA/isort/tags
@@ -41,11 +41,13 @@ repos:
     rev: typos-dict-v0.12.4 # https://github.com/crate-ci/typos/tags
     hooks:
       - id: typos
+        name: Source code spell checker
 
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.23.3 # https://github.com/gitleaks/gitleaks/tags
     hooks:
       - id: gitleaks
+        name: Find secrets with Gitleaks
 
 ci:
   autoupdate_schedule: weekly
