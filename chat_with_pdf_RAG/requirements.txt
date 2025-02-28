@@ -1,0 +1,8 @@
+langchain_anthropic
+langchain_community
+langchain_core
+langchain_experimental
+langchain_ollama
+langchain_openai
+pdfplumber
+streamlit
