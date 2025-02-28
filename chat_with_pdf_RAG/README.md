@@ -24,7 +24,7 @@ This app allows you to chat with the contents of a PDF document using Retrieval-
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/projects/chat_with_pdf_RAG.git
+   git clone https://github.com/tdikonda/projects.git
    cd chat_with_pdf_RAG
    ```
 
