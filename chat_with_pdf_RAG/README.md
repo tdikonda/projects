@@ -4,7 +4,7 @@ This app allows you to chat with the contents of a PDF document using Retrieval-
 
 ## Demo
 
-![chat_with_pdf_using_RAG_demo](demo/chat_with_PDF_using_RAG.gif)
+![chat_with_pdf_using_RAG_demo](https://github.com/tdikonda/projects/blob/main/chat_with_pdf_RAG/demo/chat_with_PDF_using_RAG_demo.gif)
 
 ## Table of Contents
 
