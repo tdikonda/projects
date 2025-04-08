@@ -1,23 +1,22 @@
+# Intelligent PDF Assistant with RAG
 
----
+This app allows you to chat with the contents of a PDF document using Retrieval-Augmented Generation (RAG). You can upload a PDF, ask questions about its content & receive answers based on the information within the document.
 
-# Intelligent PDF Assistant
+## Demo
 
-This app allows you to chat with the contents of a PDF document using Retrieval-Augmented Generation (RAG). You can upload a PDF, ask questions about its content, and receive answers based on the information within the document.
+![chat_with_pdf_using_RAG_demo](demo/chat_with_PDF_using_RAG.gif)
 
 ## Table of Contents
 
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Running the Application](#running-the-application)
-  - [Interacting with the App](#interacting-with-the-app)
 
 ## Dependencies
 
-- **Streamlit:** A Python library for building web applications.
-- **Langchain (various modules):** Libraries for handling documents, embeddings, vector stores, text splitting, etc.
-- **Ollama Embeddings and LLMs:** Models used for generating embeddings and language-based responses.
+- **[Streamlit](https://streamlit.io/) :** A Python library for building web applications.
+- **[LangChain](https://www.langchain.com/) :** Libraries for handling documents, embeddings, vector stores, text splitting etc.
+- **[Ollama](https://ollama.com/) :** Ollama is used to access Large Language Models (LLMs) & Eembeddings models which are running locally.
 
 ## Installation
 
@@ -25,19 +24,19 @@ This app allows you to chat with the contents of a PDF document using Retrieval-
 
    ```bash
    git clone https://github.com/tdikonda/projects.git
-   cd chat_with_pdf_RAG
+   cd chat_with_pdf_using_RAG
    ```
 
 2. **Set Up a Virtual Environment (Recommended):**
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows use `.venv/Scripts/activate.bat`
    ```
 
 3. **Install Ollama (if not already installed):**
 
-   Install Ollama on your local machine from the [official website](https://ollama.com/). And then pull the LLM model :- llama3.2 and Embeddings model :- mxbai-embed-large:
+   Install Ollama on your local machine from the [official website](https://ollama.com/). Pull the LLM model for example ***llama3.2*** and embeddings model for example ***mxbai-embed-large***
 
    ```bash
    ollama pull llama3.2:latest && ollama pull mxbai-embed-large:latest
@@ -59,20 +58,19 @@ This app allows you to chat with the contents of a PDF document using Retrieval-
 
 ## Usage
 
-### Running the Application
+1. **Running the Application**
 
-To run the application, execute the following command:
+   To run the application, execute the following command:
 
-```bash
-streamlit run chat_with_pdf_RAG.py
-```
+   ```bash
+   streamlit run chat_with_pdf_using_RAG.py
+   ```
 
-This will start a local web server, typically running on `http://localhost:8501`, where you can interact with the app through your web browser.
+   This will start a local web server, typically running on `http://localhost:8501`, where you can interact with the app through your web browser.
 
-### Interacting with the App
+2. **Interacting with the App**
 
-1. Launch the Streamlit app.
-2. Upload your PDF file.
-3. Choose a Large Language Model (LLM) provider and select a model.
-4. Enter your API key if necessary.
-5. Ask questions about the PDF contents in the chat interface.
+   - Select a Large Language Model (LLM) provider and select the model.
+   - Enter your API key if necessary.
+   - Upload your PDF file.
+   - Ask questions about the PDF contents in the chat interface.
