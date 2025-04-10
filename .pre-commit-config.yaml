@@ -38,7 +38,7 @@ repos:
         name: sort imports alphabetically into sections and by type
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1 # https://github.com/crate-ci/typos/tags
+    rev: v1.31.1 # https://github.com/crate-ci/typos/tags
     hooks:
       - id: typos
         name: Source code spell checker
