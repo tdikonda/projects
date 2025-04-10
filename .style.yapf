@@ -21,6 +21,3 @@ arithmetic_precedence_indication = True
 # be aligned to the first column value that is greater than the maximum
 # line length within the block).
 spaces_before_comment = 10
-
-# Use the Tab character for indentation.
-use_tabs = True
