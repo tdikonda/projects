@@ -58,11 +58,11 @@ def get_ollama_models():
 
 # --- Streamlit UI Setup ---
 st.set_page_config(
-    page_title="Agentic Stock Researcher & Analyst",
+    page_title="Agentic Stock Researcher & Advisor",
     page_icon="📈",
     layout="wide")
 
-st.title("📈 Agentic Stock Researcher & Analyst")
+st.title("📈 Agentic Stock Researcher & Advisor")
 st.markdown(
     """
     <div style="background-color: #ffe6e6; padding: 10px; border-radius: 5px; border-left: 5px solid #e30909; margin-bottom: 15px;">
@@ -97,6 +97,7 @@ with st.sidebar:
         # Initialize the LLM with selected model and parameters
         llm = LLM(
             model=llm_model,
+            max_tokens=8192,
             temperature=0.5,          # Lower temperature (0.1 to 0.3) for factual responses & Higher temperature (0.7 to 0.9) for creative tasks
           # frequency_penalty=0.1,  # Reduce repetition
           # presence_penalty=0.1,  # Encourage topic diversity
