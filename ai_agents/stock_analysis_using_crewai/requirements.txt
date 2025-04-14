@@ -1,0 +1,8 @@
+crewai
+crewai-tools
+matplotlib
+numpy
+pandas
+requests
+streamlit
+yfinance
