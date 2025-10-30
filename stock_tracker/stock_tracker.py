@@ -2,14 +2,14 @@
 Stock tracker python script
 Generates a table with columns as below
 
-Company Name          | Stock Type | Stock Symbol | Current Price | 52 Week Low | 52 Week High | All Time High (ATH) | ATH Date | % Current Price away from ATH
+Company Name          | Stock Type | Stock Symbol | Current Price | 52 Week Low | 52 Week High | All Time High (ATH) | ATH Date | % Current Price away from 52 Week High
 NVIDIA Corporation    |   EQUITY   |     NVDA	  |    $124.65	  |   $63.69	|   $153.13	   |       $153.13	     |01/07/2025|	        18.6%
 Eli Lilly and Company |	  EQUITY   |     LLY	  |    $823.23	  |   $659.74	|   $972.53	   |       $970.92	     |08/22/2024|	        15.21%
 Apple Inc.	          |   EQUITY   |     AAPL	  |    $237.59	  |   $164.08	|   $260.1	   |       $260.1	     |12/26/2024|	        8.65%
 SPDR S&P 500 ETF Trust|   ETF	   |     SPY	  |    $605.04	  |   $489.3    |   $610.78	   |       $610.78	     |01/24/2025|	        0.94%
 Alphabet Inc.	      |   EQUITY   |     GOOGL	  |    $200.87	  |   $130.67	|   $202.29	   |       $202.29	     |01/21/2025|	        0.7%
 
-The row values are sorted in descending order based on "% Current Price away from ATH" column value,
+The row values are sorted in descending order based on "% Current Price away from 52 Week High" column value,
 which means larger difference between ATH & current price of a stock would make it to the top of the table
 '''
 import os
