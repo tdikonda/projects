@@ -104,9 +104,9 @@ class StockTracker:
 
         df = pd.DataFrame(report_data)
 
-        # sort values in descending order for '% Current Price away from ATH' column
+        # sort values in descending order for '% Current Price away from 52 Week High' column
         df_sorted = df.sort_values(
-            by='% Current Price away from ATH',
+            by='% Current Price away from 52 Week High',
             ascending=False,
             key=natsort_keygen())
 
