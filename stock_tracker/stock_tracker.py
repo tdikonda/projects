@@ -59,6 +59,8 @@ class StockTracker:
                 all_time_high_date = historical_data[historical_data['High'] ==
                                                      all_time_high].index[0]
 
+                fifty_two_week_high = stock.info["fiftyTwoWeekHigh"]
+
                 if stock.info['quoteType'] == 'MUTUALFUND':
                     current_price = stock.info["previousClose"]
                 elif stock.info['quoteType'] == 'ETF':
@@ -66,9 +68,14 @@ class StockTracker:
                 else:
                     current_price = stock.info["currentPrice"]
 
-                # Calculate percentage difference
-                percentage_diff = (
-                    (all_time_high-current_price) / all_time_high) * 100
+                # Calculate 52 week high percentage difference
+                fifty_two_week_high_percentage_diff = (
+                    (fifty_two_week_high-current_price) /
+                    fifty_two_week_high) * 100
+
+                # Calculate ATH percentage difference
+                # percentage_diff = (
+                #     (all_time_high - current_price) / all_time_high) * 100
 
                 # Add data to report
                 report_data.append({
@@ -88,8 +95,8 @@ class StockTracker:
                         f'${round(all_time_high, 2)}',
                     'ATH Date':
                         all_time_high_date.strftime('%m/%d/%Y'),
-                    '% Current Price away from ATH':
-                        f'{round(percentage_diff, 2)}%'
+                    '% Current Price away from 52 Week High':
+                        f'{round(fifty_two_week_high_percentage_diff, 2)}%'
                 })
 
             except Exception as e:
