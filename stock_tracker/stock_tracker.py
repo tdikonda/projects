@@ -153,7 +153,8 @@ class StockTracker:
         <h3>Report Time: {current_time}</h3>
         """
 
-        html_table = df.to_html(index=False, classes='styled-table')
+        html_table = df.to_html(
+            index=False, classes='styled-table', justify='left')
         return f"{css_style}\n{header_text}\n{html_table}"
 
     def _send_email_notification(self, html_content):
