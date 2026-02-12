@@ -73,14 +73,15 @@ class StockTracker:
                     (fifty_two_week_high-current_price) /
                     fifty_two_week_high) * 100
 
-                # Calculate ATH percentage difference
-                # percentage_diff = (
-                #     (all_time_high - current_price) / all_time_high) * 100
+                if 'longName' in stock.info:
+                    company_name = stock.info['longName']
+                else:
+                    company_name = stock.info['shortName']
 
                 # Add data to report
                 report_data.append({
                     'Company Name':
-                        stock.info['longName'],
+                        company_name,
                     'Stock Type':
                         stock.info['quoteType'],
                     'Stock Symbol':
