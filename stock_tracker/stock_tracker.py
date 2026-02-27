@@ -63,7 +63,8 @@ class StockTracker:
 
                 if stock.info['quoteType'] == 'MUTUALFUND':
                     current_price = stock.info["previousClose"]
-                elif stock.info['quoteType'] == 'ETF':
+                elif stock.info['quoteType'] == 'ETF' or stock.info[
+                        'quoteType'] == 'CRYPTOCURRENCY':
                     current_price = stock.info["regularMarketPrice"]
                 else:
                     current_price = stock.info["currentPrice"]
