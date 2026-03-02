@@ -88,17 +88,17 @@ class StockTracker:
                     'Stock Symbol':
                         stock_symbol,
                     'Current Price':
-                        f'${round(current_price, 2)}',
+                        f'${current_price:,.2f}',
                     '52 Week Low':
-                        f'${stock.info["fiftyTwoWeekLow"]}',
+                        f'${stock.info["fiftyTwoWeekLow"]:,.2f}',
                     '52 Week High':
-                        f'${stock.info["fiftyTwoWeekHigh"]}',
+                        f'${fifty_two_week_high:,.2f}',
                     'All Time High (ATH)':
-                        f'${round(all_time_high, 2)}',
+                        f'${all_time_high:,.2f}',
                     'ATH Date':
                         all_time_high_date.strftime('%m/%d/%Y'),
                     '% Current Price away from 52 Week High':
-                        f'{round(fifty_two_week_high_percentage_diff, 2)}%'
+                        f'{fifty_two_week_high_percentage_diff:,.2f}%'
                 })
 
             except Exception as e:
