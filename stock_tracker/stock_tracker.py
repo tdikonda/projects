@@ -21,6 +21,7 @@ from email.mime.text import MIMEText
 import pandas as pd
 import yfinance as yf
 from natsort import natsort_keygen
+from numerize.numerize import numerize
 
 
 class StockTracker:
@@ -63,11 +64,14 @@ class StockTracker:
 
                 if stock.info['quoteType'] == 'MUTUALFUND':
                     current_price = stock.info["previousClose"]
+                    market_cap = stock.info["totalAssets"]
                 elif stock.info['quoteType'] == 'ETF' or stock.info[
                         'quoteType'] == 'CRYPTOCURRENCY':
                     current_price = stock.info["regularMarketPrice"]
+                    market_cap = stock.info["marketCap"]
                 else:
                     current_price = stock.info["currentPrice"]
+                    market_cap = stock.info["marketCap"]
 
                 # Calculate 52 week high percentage difference
                 fifty_two_week_high_percentage_diff = (
@@ -87,6 +91,8 @@ class StockTracker:
                         stock.info['quoteType'],
                     'Stock Symbol':
                         stock_symbol,
+                    'Market Cap':
+                        f'${numerize(market_cap)}',
                     'Current Price':
                         f'${current_price:,.2f}',
                     '52 Week Low':

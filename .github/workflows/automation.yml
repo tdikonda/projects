@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas natsort
+          pip install yfinance pandas natsort numerize
 
       # Run Stock Tracker script
       - name: Run stock tracker

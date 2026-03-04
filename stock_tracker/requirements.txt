@@ -1,0 +1,4 @@
+natsort
+numerize
+pandas
+yfinance
