@@ -6,10 +6,10 @@ Stock Tracker is a Python script that generates a stock performance report in an
 
 1. **Install Required Packages**
 
-   You need to install `pandas`, `yfinance`, `natsort`, `numerize` and other required Python packages. This can be done using pip:
+   You need to install `pandas`, `yfinance`, `natsort` and `numerize` Python packages. This can be done using pip:
 
    ```bash
-   pip install pandas yfinance natsort numerize
+   pip install -r stock_tracker/requirements.txt
    ```
 
 2. **Set Up Environment Variables**
@@ -28,7 +28,7 @@ Stock Tracker is a Python script that generates a stock performance report in an
    You can run the script using Python:
 
    ```bash
-   python stock_tracker.py
+   python stock_tracker/stock_tracker.py
    ```
 
 2. **Example Configuration**
