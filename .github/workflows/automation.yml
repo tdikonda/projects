@@ -4,13 +4,14 @@ name: Automation
 # Controls when the workflow will run
 on:
   schedule:
-    # run this script Monday through Friday at noon between 12 - 1 PM (16:00 - 17:00 UTC) US Eastern Time based on Daylight Saving Time.
-    - cron: "00 16 * * 1-5"
-
+  # run this script Monday through Friday at 1 PM US Eastern Daylight Time.
+  # - cron: "00 16 * * 1-5"
+  - cron: '00 13 * * 1-5'
+    timezone: "America/New_York"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run consists of one or more jobs that can run sequentially or in parallel
+    # A workflow run consists of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "run-script"
   run-script:
@@ -19,27 +20,26 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v5
 
-      # Sets up Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-          cache: 'pip'
+    # Sets up Python
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
 
-      # Install Dependencies
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r stock_tracker/requirements.txt
+    # Install Dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r stock_tracker/requirements.txt
 
-      # Run Stock Tracker script
-      - name: Run stock tracker
-        env:
-          STOCK_TRACKER_EMAIL: ${{ secrets.STOCK_TRACKER_SENDER_EMAIL }}
-          STOCK_TRACKER_PASSWORD: ${{ secrets.STOCK_TRACKER_SENDER_PASSWORD }}
-          STOCK_TRACKER_RECIPIENT: ${{ secrets.STOCK_TRACKER_RECIPIENT_EMAIL }}
-          STOCK_SYMBOLS: ${{ vars.STOCK_TRACKER_SYMBOLS }}
-        run: python stock_tracker/stock_tracker.py
+    # Run Stock Tracker script
+    - name: Run stock tracker
+      env:
+        STOCK_TRACKER_EMAIL: ${{ secrets.STOCK_TRACKER_SENDER_EMAIL }}
+        STOCK_TRACKER_PASSWORD: ${{ secrets.STOCK_TRACKER_SENDER_PASSWORD }}
+        STOCK_TRACKER_RECIPIENT: ${{ secrets.STOCK_TRACKER_RECIPIENT_EMAIL }}
+        STOCK_SYMBOLS: ${{ vars.STOCK_TRACKER_SYMBOLS }}
+      run: python stock_tracker/stock_tracker.py
