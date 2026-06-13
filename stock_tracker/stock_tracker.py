@@ -84,6 +84,13 @@ class StockTracker:
                 else:
                     company_name = stock.info['shortName']
 
+                # Fetch Yahoo's pre-calculated 5-Year Expected Forward PEG
+                # Yahoo Finance pulls this calculation from consensus institutional estimates
+                if 'pegRatio' in stock.info:
+                    fwd_peg = stock.info["pegRatio"]
+                else:
+                    fwd_peg = "N/A"
+
                 # Add data to report
                 report_data.append({
                     'Company Name':
@@ -105,7 +112,9 @@ class StockTracker:
                     'ATH Date':
                         all_time_high_date.strftime('%m/%d/%Y'),
                     '% Current Price away from 52 Week High':
-                        f'{fifty_two_week_high_percentage_diff:,.2f}%'
+                        f'{fifty_two_week_high_percentage_diff:,.2f}%',
+                    'Forward PEG (5-year)':
+                        fwd_peg
                 })
 
             except Exception as e:
