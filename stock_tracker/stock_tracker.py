@@ -137,7 +137,7 @@ class StockTracker:
 
         # sort values in descending order for '% Current Price away from 52 Week High' column
         df_sorted = df.sort_values(
-            by='% Current Price away from 52 Week High',
+            by='Current Price away from 52 Week High',
             ascending=False,
             key=natsort_keygen())
 
