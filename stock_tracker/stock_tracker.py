@@ -59,20 +59,38 @@ class StockTracker:
                 all_time_high_date = historical_data[historical_data['High'] ==
                                                      all_time_high].index[0]
 
-                fifty_two_week_high = stock.info["fiftyTwoWeekHigh"]
+                fifty_two_week_high = round(stock.info["fiftyTwoWeekHigh"], 2)
+                fifty_two_week_low = round(stock.info["fiftyTwoWeekLow"], 2)
+
+                forward_peg = 'N/A'
+                expected_growth_rate_1y = 'N/A'
 
                 if stock.info['quoteType'] == 'MUTUALFUND':
-                    current_price = stock.info["previousClose"]
+                    current_price = round(stock.info["previousClose"], 2)
                     market_cap = stock.info["totalAssets"]
                 elif stock.info['quoteType'] == 'ETF':
-                    current_price = stock.info["regularMarketPrice"]
+                    current_price = round(stock.info["regularMarketPrice"], 2)
                     market_cap = stock.info["totalAssets"]
                 elif stock.info['quoteType'] == 'CRYPTOCURRENCY':
-                    current_price = stock.info["regularMarketPrice"]
+                    current_price = round(stock.info["regularMarketPrice"], 2)
                     market_cap = stock.info["marketCap"]
                 else:
-                    current_price = stock.info["currentPrice"]
+                    current_price = round(stock.info["currentPrice"], 2)
                     market_cap = stock.info["marketCap"]
+
+                    # Calculate Forward PEG Ratio based on growth_estimates
+                    # get Expected Future 1-Year Earnings Growth Rate
+                    growth_estimates_df = stock.growth_estimates
+                    growth_val = growth_estimates_df.loc["+1y", "stockTrend"]
+                    if growth_val is not None and pd.notna(growth_val):
+                        expected_growth_rate_1y = round(growth_val * 100, 2)
+                        # Calculate Forward PEG Ratio
+                        # Forward PEG Ratio = Forward PE Ratio / Expected Future Earnings Growth Rate
+                        forward_pe = round(stock.info.get("forwardPE"), 2)
+                        forward_peg = round(
+                            forward_pe / expected_growth_rate_1y, 2)
+                        expected_growth_rate_1y = str(
+                            expected_growth_rate_1y) + "%"
 
                 # Calculate 52 week high percentage difference
                 fifty_two_week_high_percentage_diff = (
@@ -83,13 +101,6 @@ class StockTracker:
                     company_name = stock.info['longName']
                 else:
                     company_name = stock.info['shortName']
-
-                # Fetch Yahoo's pre-calculated 5-Year Expected Forward PEG
-                # Yahoo Finance pulls this calculation from consensus institutional estimates
-                if 'pegRatio' in stock.info:
-                    fwd_peg = stock.info["pegRatio"]
-                else:
-                    fwd_peg = "N/A"
 
                 # Add data to report
                 report_data.append({
@@ -102,19 +113,21 @@ class StockTracker:
                     'Market Cap':
                         f'${numerize(market_cap)}',
                     'Current Price':
-                        f'${current_price:,.2f}',
+                        current_price,
                     '52 Week Low':
-                        f'${stock.info["fiftyTwoWeekLow"]:,.2f}',
+                        fifty_two_week_low,
                     '52 Week High':
-                        f'${fifty_two_week_high:,.2f}',
+                        fifty_two_week_high,
                     'All Time High (ATH)':
                         f'${all_time_high:,.2f}',
                     'ATH Date':
                         all_time_high_date.strftime('%m/%d/%Y'),
-                    '% Current Price away from 52 Week High':
-                        f'{fifty_two_week_high_percentage_diff:,.2f}%',
-                    'Forward PEG (5-year)':
-                        fwd_peg
+                    'Expected Future Earnings Growth Rate (1-year)':
+                        expected_growth_rate_1y,
+                    'Forward PEG (1-year)':
+                        forward_peg,
+                    'Current Price away from 52 Week High':
+                        f'{fifty_two_week_high_percentage_diff:,.2f}%'
                 })
 
             except Exception as e:
