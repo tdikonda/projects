@@ -5,12 +5,11 @@
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0 # https://github.com/pre-commit/pre-commit-hooks/tags
+    rev: v6.0.0 # https://github.com/pre-commit/pre-commit-hooks/tags
     hooks:
       - id: check-added-large-files
-        args: ["--maxkb=50000"]
+        args: ["--maxkb=500"]
       - id: check-ast
-      - id: check-docstring-first
       - id: check-json
       - id: check-shebang-scripts-are-executable
       - id: check-symlinks
@@ -32,19 +31,19 @@ repos:
         args: ["--style=.style.yapf", "--parallel", "--in-place"]
 
   - repo: https://github.com/pycqa/isort
-    rev: 6.0.1 # https://github.com/PyCQA/isort/tags
+    rev: 9.0.0a3 # https://github.com/PyCQA/isort/tags
     hooks:
       - id: isort
         name: sort imports alphabetically into sections and by type
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.31.1 # https://github.com/crate-ci/typos/tags
+    rev: v1 # https://github.com/crate-ci/typos/tags
     hooks:
       - id: typos
         name: Source code spell checker
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.24.2 # https://github.com/gitleaks/gitleaks/tags
+    rev: v8.30.0 # https://github.com/gitleaks/gitleaks/tags
     hooks:
       - id: gitleaks
         name: Find secrets with Gitleaks
