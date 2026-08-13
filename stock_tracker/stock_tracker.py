@@ -62,7 +62,6 @@ class StockTracker:
                 fifty_two_week_high = round(stock.info["fiftyTwoWeekHigh"], 2)
                 fifty_two_week_low = round(stock.info["fiftyTwoWeekLow"], 2)
 
-                forward_peg = 'N/A'
                 expected_growth_rate_1y = 'N/A'
 
                 if stock.info['quoteType'] == 'MUTUALFUND':
@@ -78,19 +77,12 @@ class StockTracker:
                     current_price = round(stock.info["currentPrice"], 2)
                     market_cap = stock.info["marketCap"]
 
-                    # Calculate Forward PEG Ratio based on growth_estimates
                     # get Expected Future 1-Year Earnings Growth Rate
                     growth_estimates_df = stock.growth_estimates
                     growth_val = growth_estimates_df.loc["+1y", "stockTrend"]
                     if growth_val is not None and pd.notna(growth_val):
-                        expected_growth_rate_1y = round(growth_val * 100, 2)
-                        # Calculate Forward PEG Ratio
-                        # Forward PEG Ratio = Forward PE Ratio / Expected Future Earnings Growth Rate
-                        forward_pe = round(stock.info.get("forwardPE"), 2)
-                        forward_peg = round(
-                            forward_pe / expected_growth_rate_1y, 2)
                         expected_growth_rate_1y = str(
-                            expected_growth_rate_1y) + "%"
+                            round(growth_val * 100, 2)) + "%"
 
                 # Calculate 52 week high percentage difference
                 fifty_two_week_high_percentage_diff = (
@@ -124,8 +116,6 @@ class StockTracker:
                         all_time_high_date.strftime('%m/%d/%Y'),
                     'Expected Future Earnings Growth Rate (1-year)':
                         expected_growth_rate_1y,
-                    'Forward PEG (1-year)':
-                        forward_peg,
                     'Current Price away from 52 Week High':
                         f'{fifty_two_week_high_percentage_diff:,.2f}%'
                 })
