@@ -105,11 +105,11 @@ class StockTracker:
                     'Market Cap':
                         f'${numerize(market_cap)}',
                     'Current Price':
-                        current_price,
+                        f'${current_price}',
                     '52 Week Low':
-                        fifty_two_week_low,
+                        f'${fifty_two_week_low}',
                     '52 Week High':
-                        fifty_two_week_high,
+                        f'${fifty_two_week_high}',
                     'All Time High (ATH)':
                         f'${all_time_high:,.2f}',
                     'ATH Date':
