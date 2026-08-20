@@ -31,7 +31,7 @@ repos:
     args: [ "--style=.style.yapf", "--parallel", "--in-place" ]
 
 - repo: https://github.com/pycqa/isort
-  rev: 9.0.0b2 # https://github.com/PyCQA/isort/tags
+  rev: 9.0.0b5 # https://github.com/PyCQA/isort/tags
   hooks:
   - id: isort
     name: sort imports alphabetically into sections and by type
