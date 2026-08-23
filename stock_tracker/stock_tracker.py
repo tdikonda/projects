@@ -75,8 +75,8 @@ class StockTracker:
                     market_cap = stock.info["marketCap"]
                 else:
                     current_price = round(stock.info["currentPrice"], 2)
-                    market_cap = stock.info["marketCap"] or stock.info[
-                        "nonDilutedMarketCap"]
+                    market_cap = stock.info.get("marketCap") or stock.info.get(
+                        "nonDilutedMarketCap")
 
                     # get Expected Future 1-Year Earnings Growth Rate
                     growth_estimates_df = stock.growth_estimates
