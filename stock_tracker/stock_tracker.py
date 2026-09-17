@@ -62,28 +62,26 @@ class StockTracker:
                 fifty_two_week_high = round(stock.info["fiftyTwoWeekHigh"], 2)
                 fifty_two_week_low = round(stock.info["fiftyTwoWeekLow"], 2)
 
-                expected_growth_rate_1y = 'N/A'
-
-                if stock.info['quoteType'] == 'MUTUALFUND':
-                    current_price = round(stock.info["previousClose"], 2)
-                    market_cap = stock.info["totalAssets"]
-                elif stock.info['quoteType'] == 'ETF':
-                    current_price = round(stock.info["regularMarketPrice"], 2)
-                    market_cap = stock.info["totalAssets"]
-                elif stock.info['quoteType'] == 'CRYPTOCURRENCY':
-                    current_price = round(stock.info["regularMarketPrice"], 2)
-                    market_cap = stock.info["marketCap"]
-                else:
-                    current_price = round(stock.info["currentPrice"], 2)
+                current_price = round(
+                    stock.info.get("currentPrice")
+                    or stock.info.get("regularMarketPrice")
+                    or stock.info.get("previousClose"), 2)
+                if "marketCap" in stock.info or "totalAssets" in stock.info:
                     market_cap = stock.info.get("marketCap") or stock.info.get(
-                        "nonDilutedMarketCap")
+                        "totalAssets")
+                    market_cap = numerize(market_cap)
+                else:
+                    market_cap = 'N/A'
 
+                try:
                     # get Expected Future 1-Year Earnings Growth Rate
                     growth_estimates_df = stock.growth_estimates
                     growth_val = growth_estimates_df.loc["+1y", "stockTrend"]
                     if growth_val is not None and pd.notna(growth_val):
                         expected_growth_rate_1y = str(
                             round(growth_val * 100, 2)) + "%"
+                except Exception:
+                    expected_growth_rate_1y = 'N/A'
 
                 # Calculate 52 week high percentage difference
                 fifty_two_week_high_percentage_diff = (
@@ -104,7 +102,7 @@ class StockTracker:
                     'Stock Symbol':
                         stock_symbol,
                     'Market Cap':
-                        f'${numerize(market_cap)}',
+                        f'${market_cap}',
                     'Current Price':
                         f'${current_price}',
                     '52 Week Low':
