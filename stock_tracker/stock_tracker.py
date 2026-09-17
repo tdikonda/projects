@@ -73,14 +73,14 @@ class StockTracker:
                 else:
                     market_cap = 'N/A'
 
-                try:
+                if stock.info['quoteType'] == 'EQUITY':
                     # get Expected Future 1-Year Earnings Growth Rate
                     growth_estimates_df = stock.growth_estimates
                     growth_val = growth_estimates_df.loc["+1y", "stockTrend"]
                     if growth_val is not None and pd.notna(growth_val):
                         expected_growth_rate_1y = str(
                             round(growth_val * 100, 2)) + "%"
-                except Exception:
+                else:
                     expected_growth_rate_1y = 'N/A'
 
                 # Calculate 52 week high percentage difference
