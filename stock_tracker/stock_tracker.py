@@ -50,22 +50,29 @@ class StockTracker:
 
         for stock_symbol in stocks_symbol:
             try:
-                # Get current stock price
+                # Get current price of stock/ETF/MF/Crypto
                 stock = yf.Ticker(stock_symbol)
-                historical_data = stock.history(period="max")
-
-                # Find all-time high and its date
-                all_time_high = historical_data['High'].max()
-                all_time_high_date = historical_data[historical_data['High'] ==
-                                                     all_time_high].index[0]
-
-                fifty_two_week_high = round(stock.info["fiftyTwoWeekHigh"], 2)
-                fifty_two_week_low = round(stock.info["fiftyTwoWeekLow"], 2)
-
                 current_price = round(
                     stock.info.get("currentPrice")
                     or stock.info.get("regularMarketPrice")
                     or stock.info.get("previousClose"), 2)
+
+                # Get 52 week high/low price
+                fifty_two_week_high = round(stock.info["fiftyTwoWeekHigh"], 2)
+                fifty_two_week_low = round(stock.info["fiftyTwoWeekLow"], 2)
+
+                # Calculate 52 week high percentage difference
+                fifty_two_week_high_percentage_diff = round(
+                    (fifty_two_week_high-current_price) / fifty_two_week_high *
+                    100, 2)
+
+                # Get all-time high and its date
+                historical_data = stock.history(period="max")
+                all_time_high = historical_data['High'].max()
+                all_time_high_date = historical_data[historical_data['High'] ==
+                                                     all_time_high].index[0]
+
+                # Get market cap
                 if "marketCap" in stock.info or "totalAssets" in stock.info:
                     market_cap = stock.info.get("marketCap") or stock.info.get(
                         "totalAssets")
@@ -73,8 +80,8 @@ class StockTracker:
                 else:
                     market_cap = 'N/A'
 
+                # Get Expected Future 1-Year Earnings Growth Rate
                 if stock.info['quoteType'] == 'EQUITY':
-                    # get Expected Future 1-Year Earnings Growth Rate
                     growth_estimates_df = stock.growth_estimates
                     growth_val = growth_estimates_df.loc["+1y", "stockTrend"]
                     if growth_val is not None and pd.notna(growth_val):
@@ -83,11 +90,14 @@ class StockTracker:
                 else:
                     expected_growth_rate_1y = 'N/A'
 
-                # Calculate 52 week high percentage difference
-                fifty_two_week_high_percentage_diff = (
-                    (fifty_two_week_high-current_price) /
-                    fifty_two_week_high) * 100
+                # Get YTD performance
+                ytd_df = stock.history(period="ytd")
+                start_price = round(ytd_df["Close"].iloc[0], 2)
+                end_price = round(ytd_df["Close"].iloc[-1], 2)
+                ytd_return = round((end_price-start_price) / start_price * 100,
+                                   2)
 
+                # Get Company Name
                 if 'longName' in stock.info:
                     company_name = stock.info['longName']
                 else:
@@ -115,8 +125,10 @@ class StockTracker:
                         all_time_high_date.strftime('%m/%d/%Y'),
                     'Expected Future Earnings Growth Rate (1-year)':
                         expected_growth_rate_1y,
+                    'YTD Return':
+                        f'{ytd_return}%',
                     'Current Price away from 52 Week High':
-                        f'{fifty_two_week_high_percentage_diff:,.2f}%'
+                        f'{fifty_two_week_high_percentage_diff}%'
                 })
 
             except Exception as e:
